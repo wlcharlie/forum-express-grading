@@ -25,43 +25,41 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  // login
+  // login, reg, logout
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', {
     failureRedirect: '/signup',
     failureFlash: true
   }), userController.signIn)
-
   app.get('/logout', userController.logout)
 
-  // after login: regular user
+  // after login
+  // user page
+  app.get('/users/:id', authenticated, userController.getUser)
+  app.get('/users/:id/edit', authenticated, userController.editUser)
+  app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+
   // restaurants
   app.get('/', authenticated, (req, res) => {
     res.redirect('restaurants')
   })
   app.get('/restaurants', authenticated, restController.getRestaurants)
-
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
-  // do comment
+  // leave comment & delete for admin
   app.post('/comments', authenticated, commentController.postComment)
   app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
   // admin > restaurants
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
-
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
   app.post('/admin/restaurants', authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
-
   app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
-
   app.get('/admin/restaurants/:id/edit', authenticatedAdmin, adminController.editRestaurant)
   app.put('/admin/restaurants/:id', authenticatedAdmin, upload.single('image'), adminController.putRestaurant)
-
   app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
   // admin > users 
@@ -70,11 +68,8 @@ module.exports = (app, passport) => {
 
   // admin > categories
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
-
   app.post('/admin/categories', authenticatedAdmin, categoryController.postCategories)
-
   app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategories)
-
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategories)
 }

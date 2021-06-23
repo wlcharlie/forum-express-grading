@@ -1,0 +1,14 @@
+<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+  <label for="name">Name</label>
+  <input type="text" class="form-control" id="name" name="name" value="{{user.name}}">
+
+  <label for="email">Email</label>
+  <input type="email" class="form-control" id="email" name="email" value="{{user.email}}" readonly>
+
+  <label for="image">Image</label>
+  <img class="img-responsive center-block my-5" src="{{#if user.image}}{{user.image}}{{/if}}"
+    style="width: 250px;margin-bottom: 25px;">
+  <input type="file" class="form-control-file" id="image" name="image">
+
+  <button type="submit" class="btn btn-primary my-2">Save Changes</button>
+</form>
