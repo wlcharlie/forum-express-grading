@@ -54,10 +54,11 @@ const userController = {
   },
 
   getUser: (req, res) => {
+    const currentUser = req.user.id
     return User.findByPk(req.params.id, {
       include: [{ model: Comment, include: [Restaurant] }]
     })
-      .then(user => res.render('profile', { user: user.toJSON() }))
+      .then(user => res.render('profile', { user: user.toJSON(), currentUser }))
   },
 
   editUser: (req, res) => {

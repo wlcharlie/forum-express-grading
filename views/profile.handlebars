@@ -17,10 +17,11 @@
                 <li><strong>Role:</strong> {{#if user.isAdmin}}Admin{{else}}Users{{/if}}</li>
               </ul>
             </div>
-
+            {{#ifCond user.id currentUser}}
             <div>
               <a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a>
             </div>
+            {{/ifCond}}
           </div>
         </div>
       </div>
