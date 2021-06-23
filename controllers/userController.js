@@ -62,10 +62,6 @@ const userController = {
   },
 
   editUser: (req, res) => {
-    if (helpers.getUser(req).id !== Number(req.params.id)) {
-      req.flahs('error_messages', 'You don\'t have authority to access the page')
-      return res.redirect('back')
-    }
     return User.findByPk(req.params.id)
       .then(user => res.render('profileEdit', { user: user.toJSON() }))
   },
