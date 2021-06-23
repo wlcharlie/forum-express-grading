@@ -1,4 +1,5 @@
 const fs = require('fs')
+const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
@@ -54,11 +55,10 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    const currentUser = req.user.id
     return User.findByPk(req.params.id, {
       include: [{ model: Comment, include: [Restaurant] }]
     })
-      .then(user => res.render('profile', { user: user.toJSON(), currentUser }))
+      .then(user => res.render('profile', { currentUser: helpers.getUser(req).id, user: user.toJSON() }))
   },
 
   editUser: (req, res) => {
