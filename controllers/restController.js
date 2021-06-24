@@ -56,9 +56,8 @@ const restController = {
     return Restaurant.findByPk(req.params.id, {
       include: [Category, { model: Comment, include: [User] }]
     }).then(restaurant => {
-      restaurant.viewCounts++
       res.render('restaurant', { restaurant: restaurant.toJSON() })
-      return restaurant.save()
+      return restaurant.increment('viewCounts')
     })
   },
 
