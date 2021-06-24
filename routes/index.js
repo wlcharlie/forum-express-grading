@@ -46,6 +46,7 @@ module.exports = (app, passport) => {
     res.redirect('restaurants')
   })
   app.get('/restaurants', authenticated, restController.getRestaurants)
+  app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
   // leave comment & delete for admin
