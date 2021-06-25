@@ -15,7 +15,9 @@
 <br /><br />
 <h1>人氣餐廳</h1>
 <hr />
-
+{{#unless restaurants.length }}
+<h2>還沒有餐廳被收藏...</h2>
+{{/unless}}
 <div class="row">
   {{#each restaurants}}
   <div class="col-md-12">

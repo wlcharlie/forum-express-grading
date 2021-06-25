@@ -109,13 +109,14 @@ const restController = {
       ]
     })
       .then(data => {
-        let restaurants = data.map(d => ({
+        const restaurants = data.map(d => ({
           ...d.dataValues,
           isFavorited: helpers.getUser(req).FavoritedRestaurants.map(f => f.id).includes(d.id),
           description: d.dataValues.description.substring(0, 20),
           FavoriteCount: d.FavoritedUsers.length
         }))
-        restaurants = restaurants.sort((a, b) => b.FavoriteCount - a.FavoriteCount).slice(0, 11)
+        restaurants.sort((a, b) => b.FavoriteCount - a.FavoriteCount).slice(0, 11).filter(fav => fav.FavoriteCountCount > 0)
+
         res.render('topRestaurants', { restaurants })
       })
   }
