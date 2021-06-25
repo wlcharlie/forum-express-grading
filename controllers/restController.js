@@ -97,8 +97,8 @@ const restController = {
   getDashboard: (req, res) => {
     return Restaurant.findByPk(req.params.id, { include: [Category, Comment] })
       .then(restaurant => {
-        const comments = restaurant.Comments.length
-        res.render('dashboard', { restaurant: restaurant.toJSON(), comments })
+        const commentsNum = restaurant.Comments.length
+        res.render('dashboard', { restaurant: restaurant.toJSON(), commentsNum })
       })
   }
 
