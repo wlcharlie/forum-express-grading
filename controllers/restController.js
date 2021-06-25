@@ -115,7 +115,7 @@ const restController = {
           description: d.dataValues.description.substring(0, 20),
           FavoriteCount: d.FavoritedUsers.length
         }))
-        restaurants = restaurants.sort((a, b) => b.FavoriteCount - a.FavoriteCount).slice(0, 11).filter(fav => fav.FavoriteCountCount > 0)
+        restaurants = restaurants.sort((a, b) => b.FavoriteCount - a.FavoriteCount).slice(0, 11).filter(fav => fav.FavoriteCount)
 
         res.render('topRestaurants', { restaurants })
       })
