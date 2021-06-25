@@ -61,7 +61,7 @@ const userController = {
     return User.findByPk(req.params.id, {
       include: [{ model: Comment, include: [Restaurant] }]
     })
-      .then(user => res.render('profile', { currentUser: helpers.getUser(req).id, user: user.toJSON() }))
+      .then(user => res.render('profile', { currentUser: helpers.getUser(req).id, viewUser: user.toJSON() }))
   },
 
   editUser: (req, res) => {

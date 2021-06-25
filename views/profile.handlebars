@@ -5,21 +5,21 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h1>{{user.name}}</h1>
-            <img class="img-responsive center-block" src="{{user.image}}" style="width: 250px;margin-bottom: 25px;"
+            <h1>{{viewUser.name}}</h1>
+            <img class="img-responsive center-block" src="{{viewUser.image}}" style="width: 250px;margin-bottom: 25px;"
               alt="user avatar">
           </div>
 
           <div class="col-md-6">
             <div class="well">
               <ul class="list-unstyled">
-                <li><strong>Email:</strong> {{user.email}}</li>
-                <li><strong>Role:</strong> {{#if user.isAdmin}}Admin{{else}}Users{{/if}}</li>
+                <li><strong>Email:</strong> {{viewUser.email}}</li>
+                <li><strong>Role:</strong> {{#if viewUser.isAdmin}}Admin{{else}}Users{{/if}}</li>
               </ul>
             </div>
-            {{#ifCond user.id currentUser}}
+            {{#ifCond viewUser.id currentUser}}
             <div>
-              <a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a>
+              <a href="/users/{{viewUser.id}}/edit" class="btn btn-primary">Edit</a>
             </div>
             {{/ifCond}}
           </div>
@@ -31,7 +31,7 @@
     <div class="card my-2">
       <h5 class="card-header">Your comments</h5>
       <div class="card-body">
-        {{#each user.Comments}}
+        {{#each viewUser.Comments}}
         <a href="/restaurants/{{this.Restaurant.id}}"><img src="{{this.Restaurant.image}}" alt="image-thumb"
             class="img-thumbnail" style="width:150px; height: 150px"></a>
         {{/each}}
