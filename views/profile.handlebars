@@ -1,33 +1,41 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-      <h5 class="card-header">
-        {{#ifCond viewUser.id currentUser}}Your
-        {{/ifCond}}Profile Info
-      </h5>
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <h1>{{viewUser.name}}</h1>
-            <img class="img-responsive center-block" src="{{viewUser.image}}" style="width: 250px;margin-bottom: 25px;"
-              alt="user avatar">
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <img class="card-img-left" src="{{viewUser.image}}" style="width: 250px;" alt="user avatar">
+        </div>
+
+        <div class="col-md-6">
+          <div class="well">
+            <ul class="list-unstyled">
+              <li><strong>
+
+                  <h1>{{viewUser.name}}
+                    {{#ifCond viewUser.id currentUser}}
+
+                    <a href="/users/{{viewUser.id}}/edit" class="btn btn-primary">Edit</a>
+
+                    {{/ifCond}}
+                  </h1>
+
+                </strong></li>
+              <li><strong>Email:</strong> {{viewUser.email}}</li>
+              <li><strong>Role:</strong> {{#if viewUser.isAdmin}}Admin{{else}}Users{{/if}}</li>
+            </ul>
+          </div>
+          <div>
+            <h6>Followings: {{user.Followings.length}}</h6>
+            <h6>Followers: {{user.Followers.length}}</h6>
+            <h6>Given Comments: {{viewUser.Comments.length}}</h6>
+            <h6>Favorited Restaurants: {{user.FavoritedRestaurants.length}}</h6>
           </div>
 
-          <div class="col-md-6">
-            <div class="well">
-              <ul class="list-unstyled">
-                <li><strong>Email:</strong> {{viewUser.email}}</li>
-                <li><strong>Role:</strong> {{#if viewUser.isAdmin}}Admin{{else}}Users{{/if}}</li>
-              </ul>
-            </div>
-            {{#ifCond viewUser.id currentUser}}
-            <div>
-              <a href="/users/{{viewUser.id}}/edit" class="btn btn-primary">Edit</a>
-            </div>
-            {{/ifCond}}
-          </div>
         </div>
       </div>
+
     </div>
   </div>
   <div class="col-md-4">
@@ -64,6 +72,7 @@
       </div>
     </div>
   </div>
+
   <div class="col-md-8">
     <div class="card my-2">
       <h5 class="card-header">Favorited</h5>
