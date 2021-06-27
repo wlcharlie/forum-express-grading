@@ -1,5 +1,3 @@
-const helpers = require('../_helpers')
-
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
@@ -64,8 +62,8 @@ const restController = {
         { model: Comment, include: [User] }
       ]
     }).then(restaurant => {
-      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      const isLiked = restaurant.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+      const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
+      const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
       res.render('restaurant', { isFavorited, isLiked, restaurant: restaurant.toJSON() })
       return restaurant.increment('viewCounts')
     })
@@ -115,7 +113,7 @@ const restController = {
       .then(data => {
         let restaurants = data.map(d => ({
           ...d.dataValues,
-          isFavorited: helpers.getUser(req).FavoritedRestaurants.map(f => f.id).includes(d.id),
+          isFavorited: req.user.FavoritedRestaurants.map(f => f.id).includes(d.id),
           description: d.dataValues.description.substring(0, 20),
           FavoriteCount: d.FavoritedUsers.length
         }))

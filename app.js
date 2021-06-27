@@ -1,6 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const db = require('./models')
+const helpers = require('./_helpers')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -26,6 +27,11 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use('/upload', express.static(__dirname + '/upload'))
+
+app.use((req, res, next) => {
+  req.user = helpers.getUser(req)
+  next()
+})
 
 
 app.use((req, res, next) => {

@@ -1,5 +1,4 @@
 const fs = require('fs')
-const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
@@ -62,11 +61,11 @@ const userController = {
     return User.findByPk(req.params.id, {
       include: [{ model: Comment, include: [Restaurant] }]
     })
-      .then(user => res.render('profile', { currentUser: helpers.getUser(req).id, viewUser: user.toJSON() }))
+      .then(user => res.render('profile', { currentUser: req.user.id, viewUser: user.toJSON() }))
   },
 
   editUser: (req, res) => {
-    if (helpers.getUser(req).id !== Number(req.params.id)) {
+    if (req.user.id !== Number(req.params.id)) {
       req.flash('error_messages', 'You don\'t have authority to access the page')
       return res.redirect('/restaurants')
     }
@@ -114,7 +113,7 @@ const userController = {
 
   addFavorite: (req, res) => {
     return Favorite.create({
-      UserId: helpers.getUser(req).id,
+      UserId: req.user.id,
       RestaurantId: req.params.restaurantId
     })
       .then((restaurant) => {
@@ -125,7 +124,7 @@ const userController = {
   removeFavorite: (req, res) => {
     return Favorite.findOne({
       where: {
-        UserId: helpers.getUser(req).id,
+        UserId: req.user.id,
         RestaurantId: req.params.restaurantId
       }
     })
@@ -139,7 +138,7 @@ const userController = {
 
   addLike: (req, res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id,
+      UserId: req.user.id,
       RestaurantId: req.params.restaurantId
     })
       .then((restaurant) => {
@@ -150,7 +149,7 @@ const userController = {
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
-        UserId: helpers.getUser(req).id,
+        UserId: req.user.id,
         RestaurantId: req.params.restaurantId
       }
     })
@@ -178,7 +177,7 @@ const userController = {
 
   addFollowing: (req, res) => {
     return Followship.create({
-      followerId: helpers.getUser(req).id,
+      followerId: req.user.id,
       followingId: req.params.userId
     })
       .then(followship => res.redirect('back'))
@@ -187,7 +186,7 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: req.user.id,
         followingId: req.params.userId
       }
     }).then((followship) => {
