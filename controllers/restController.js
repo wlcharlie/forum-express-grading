@@ -106,7 +106,7 @@ const restController = {
         {
           model: User,
           as: 'FavoritedUsers',
-          where: true
+          // where: true
         }
       ]
     })

@@ -27,10 +27,10 @@
             </ul>
           </div>
           <div>
-            <h6>Followings: {{user.Followings.length}}</h6>
-            <h6>Followers: {{user.Followers.length}}</h6>
-            <h6>Given Comments: {{viewUser.Comments.length}}</h6>
-            <h6>Favorited Restaurants: {{user.FavoritedRestaurants.length}}</h6>
+            <h6><strong>{{viewUser.Followings.length}}</strong> followings</h6>
+            <h6><strong>{{viewUser.Followers.length}}</strong> followers</h6>
+            <h6><strong>{{viewUser.Comments.length}}</strong> 已評論餐廳</h6>
+            <h6><strong>{{viewUser.FavoritedRestaurants.length}}</strong> 收藏的餐廳</h6>
           </div>
 
         </div>
@@ -40,9 +40,9 @@
   </div>
   <div class="col-md-4">
     <div class="card my-2">
-      <h5 class="card-header">followings</h5>
+      <h5 class="card-header"><strong>{{viewUuser.Followings.length}}</strong> followings</h5>
       <div class="card-body">
-        {{#each user.Followings}}
+        {{#each viewUser.Followings}}
         <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="image-thumb" class="img-thumbnail"
             style="width:100px; height: 100px"></a>
         {{/each}}
@@ -51,7 +51,7 @@
   </div>
   <div class="col-md-8">
     <div class="card my-2">
-      <h5 class="card-header">Given comments</h5>
+      <h5 class="card-header"><strong>{{viewUser.Comments.length}}</strong> 已評論餐廳</h5>
       <div class="card-body">
         {{#each viewUser.Comments}}
         <a href="/restaurants/{{this.Restaurant.id}}"><img src="{{this.Restaurant.image}}" alt="image-thumb"
@@ -63,9 +63,9 @@
 
   <div class="col-md-4">
     <div class="card my-2">
-      <h5 class="card-header">followers</h5>
+      <h5 class="card-header"><strong>{{viewUser.Followers.length}}</strong> followers</h5>
       <div class="card-body">
-        {{#each user.Followers}}
+        {{#each viewUser.Followers}}
         <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="image-thumb" class="img-thumbnail"
             style="width:100px; height: 100px"></a>
         {{/each}}
@@ -75,9 +75,9 @@
 
   <div class="col-md-8">
     <div class="card my-2">
-      <h5 class="card-header">Favorited</h5>
+      <h5 class="card-header"><strong>{{viewUser.FavoritedRestaurants.length}}</strong> 收藏的餐廳</h5>
       <div class="card-body">
-        {{#each user.FavoritedRestaurants}}
+        {{#each viewUser.FavoritedRestaurants}}
         <a href="/restaurants/{{this.id}}"><img src="{{this.image}}" alt="image-thumb" class="img-thumbnail"
             style="width:100px; height: 100px"></a>
         {{/each}}
