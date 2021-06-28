@@ -30,11 +30,10 @@ const adminService = {
       })
     })
   },
-  //尚未refactor
-  postRestaurant: (req, res) => {
+
+  postRestaurant: (req, res, cb) => {
     if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
+      return cb({ status: 'error', message: 'name is not exist' })
     }
 
     const { file } = req
@@ -50,8 +49,7 @@ const adminService = {
           image: file ? img.data.link : null,
           CategoryId: req.body.categoryId
         }).then((restaurant) => {
-          req.flash('success_messages', 'restaurant was successfully created')
-          return res.redirect('/admin/restaurants')
+          return cb({ status: 'success', message: 'restaurant was successfully created' })
         })
       })
     }
@@ -65,8 +63,8 @@ const adminService = {
         image: null,
         CategoryId: req.body.categoryId
       }).then((restaurant) => {
-        req.flash('success_messages', 'restaurant was successfully created')
-        return res.redirect('/admin/restaurants')
+        return cb({ status: 'success', message: 'restaurant was successfully created' })
+
       })
     }
   },

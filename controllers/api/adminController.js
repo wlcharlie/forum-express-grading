@@ -1,5 +1,6 @@
 const adminService = require('../../services/adminServices')
 
+
 const adminController = {
   getRestaurants: (req, res) => {
     adminService.getRestaurants(req, res, (data) => {
@@ -9,6 +10,12 @@ const adminController = {
 
   getRestaurant: (req, res) => {
     adminService.getRestaurant(req, res, (data) => {
+      return res.json(data)
+    })
+  },
+
+  postRestaurant: (req, res) => {
+    adminService.postRestaurant(req, res, (data) => {
       return res.json(data)
     })
   },
