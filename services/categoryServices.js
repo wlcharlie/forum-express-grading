@@ -35,13 +35,12 @@ const categoryService = {
       })
   },
 
-  // 尚未refactor
-  deleteCategories: (req, res) => {
+  deleteCategories: (req, res, cb) => {
     Category.destroy({ where: { id: req.params.id } })
       .then(() => {
-        req.flash('success_messages', 'The category has been successfully deleted!')
-        return res.redirect('/admin/categories')
+        return cb({ status: 'success', message: 'category was deleted' })
       })
+      .catch(err => cb({ status: 'error', message: "please try again" }))
   }
 }
 

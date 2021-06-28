@@ -33,11 +33,14 @@ const categoryController = {
   },
 
   deleteCategories: (req, res) => {
-    Category.destroy({ where: { id: req.params.id } })
-      .then(() => {
-        req.flash('success_messages', 'The category has been successfully deleted!')
-        return res.redirect('/admin/categories')
-      })
+    categoryService.deleteCategories(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect('/admin/categories')
+    })
   }
 }
 
