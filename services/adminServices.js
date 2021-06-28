@@ -144,13 +144,13 @@ const adminService = {
     }
   },
 
-  //尚未refactor
-  deleteRestaurant: (req, res) => {
+
+  deleteRestaurant: (req, res, cb) => {
     return Restaurant.findByPk(req.params.id)
       .then((restaurant) => {
         restaurant.destroy()
           .then((restaurant) => {
-            res.redirect('/admin/restaurants')
+            cb({ status: 'success', message: '' })
           })
       })
   },
