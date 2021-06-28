@@ -93,11 +93,9 @@ const adminService = {
     })
   },
 
-  //尚未refactor
-  putRestaurant: (req, res) => {
+  putRestaurant: (req, res, cb) => {
     if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
+      return cb({ status: 'error', message: "name is not exist" })
     }
 
     const { file } = req
@@ -116,8 +114,7 @@ const adminService = {
               CategoryId: req.body.categoryId
             })
               .then((restaurant) => {
-                req.flash('success_messages', 'restaurant was successfully to update')
-                res.redirect('/admin/restaurants')
+                return cb({ status: 'success', message: 'restaurant was successfully to update' })
               })
           })
       })
@@ -135,8 +132,7 @@ const adminService = {
             CategoryId: req.body.categoryId
           })
             .then((restaurant) => {
-              req.flash('success_messages', 'restaurant was successfully to update')
-              res.redirect('/admin/restaurants')
+              return cb({ status: 'success', message: 'restaurant was successfully to update' })
             })
         })
     }
