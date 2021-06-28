@@ -1,15 +1,21 @@
 const db = require('../models')
 const Category = db.Category
 
-const categoryService = require('../services/categoryServices')
-
-const categoryController = {
-  getCategories: (req, res) => {
-    categoryService.getCategories(req, res, (data) => {
-      return res.render('admin/categories', data)
+const categoryService = {
+  getCategories: (req, res, cb) => {
+    return Category.findAll({
+      raw: true,
+      nest: true
+    }).then(categories => {
+      if (req.params.id) {
+        return Category.findByPk(req.params.id, { raw: true, nest: true })
+          .then(category => res.render('admin/categories', { categories, category }))
+      }
+      return cb({ categories: categories })
     })
   },
 
+  // 尚未refactor
   postCategories: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', 'name can\'t be blank')
@@ -19,6 +25,7 @@ const categoryController = {
       .then((category) => { res.redirect('/admin/categories') })
   },
 
+  // 尚未refactor
   putCategories: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', 'name can\'t be blank')
@@ -32,6 +39,7 @@ const categoryController = {
       })
   },
 
+  // 尚未refactor
   deleteCategories: (req, res) => {
     Category.destroy({ where: { id: req.params.id } })
       .then(() => {
@@ -41,4 +49,4 @@ const categoryController = {
   }
 }
 
-module.exports = categoryController
+module.exports = categoryService
