@@ -24,17 +24,14 @@ const categoryService = {
       .then((category) => cb({ status: 'success', message: 'category was added' }))
   },
 
-  // 尚未refactor
-  putCategories: (req, res) => {
+  putCategories: (req, res, cb) => {
     if (!req.body.name) {
-      req.flash('error_messages', 'name can\'t be blank')
-      return res.redirect('back')
+      return cb({ status: 'error', message: "name is not exist" })
     }
 
     Category.update({ name: req.body.name }, { where: { id: req.params.id } })
       .then(() => {
-        req.flash('success_messages', 'The category has been successfully updated!')
-        return res.redirect('/admin/categories')
+        return cb({ status: 'success', message: 'category was updated' })
       })
   },
 

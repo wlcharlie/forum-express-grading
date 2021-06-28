@@ -22,16 +22,14 @@ const categoryController = {
   },
 
   putCategories: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', 'name can\'t be blank')
-      return res.redirect('back')
-    }
-
-    Category.update({ name: req.body.name }, { where: { id: req.params.id } })
-      .then(() => {
-        req.flash('success_messages', 'The category has been successfully updated!')
-        return res.redirect('/admin/categories')
-      })
+    categoryService.putCategories(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect('/admin/categories')
+    })
   },
 
   deleteCategories: (req, res) => {
