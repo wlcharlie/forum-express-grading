@@ -11,12 +11,14 @@ const categoryController = {
   },
 
   postCategories: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', 'name can\'t be blank')
-      return res.redirect('back')
-    }
-    return Category.create({ name: req.body.name })
-      .then((category) => { res.redirect('/admin/categories') })
+    categoryService.postCategories(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect('/admin/categories')
+    })
   },
 
   putCategories: (req, res) => {

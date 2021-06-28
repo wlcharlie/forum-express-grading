@@ -15,14 +15,13 @@ const categoryService = {
     })
   },
 
-  // 尚未refactor
-  postCategories: (req, res) => {
+
+  postCategories: (req, res, cb) => {
     if (!req.body.name) {
-      req.flash('error_messages', 'name can\'t be blank')
-      return res.redirect('back')
+      return cb({ status: 'error', message: "name is not exist" })
     }
     return Category.create({ name: req.body.name })
-      .then((category) => { res.redirect('/admin/categories') })
+      .then((category) => cb({ status: 'success', message: 'category was added' }))
   },
 
   // 尚未refactor
