@@ -9,7 +9,7 @@ const categoryService = {
     }).then(categories => {
       if (req.params.id) {
         return Category.findByPk(req.params.id, { raw: true, nest: true })
-          .then(category => res.render('admin/categories', { categories, category }))
+          .then(category => cb({ categories, category }))
       }
       return cb({ categories: categories })
     })
