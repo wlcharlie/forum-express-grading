@@ -19,6 +19,7 @@ const adminService = {
     })
   },
 
+  //尚未refactor
   createRestaurant: (req, res) => {
     Category.findAll({
       raw: true,
@@ -29,7 +30,7 @@ const adminService = {
       })
     })
   },
-
+  //尚未refactor
   postRestaurant: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', "name didn't exist")
@@ -70,15 +71,13 @@ const adminService = {
     }
   },
 
-  getRestaurant: (req, res) => {
+  getRestaurant: (req, res, cb) => {
     return Restaurant.findByPk(req.params.id, {
       raw: true,
       nest: true,
       include: [Category]
     }).then(restaurant => {
-      return res.render('admin/restaurant', {
-        restaurant: restaurant
-      })
+      return cb({ restaurant })
     })
   },
 
@@ -96,6 +95,7 @@ const adminService = {
     })
   },
 
+  //尚未refactor
   putRestaurant: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', "name didn't exist")
@@ -144,6 +144,7 @@ const adminService = {
     }
   },
 
+  //尚未refactor
   deleteRestaurant: (req, res) => {
     return Restaurant.findByPk(req.params.id)
       .then((restaurant) => {
@@ -154,11 +155,13 @@ const adminService = {
       })
   },
 
+  //尚未refactor
   getUsers: (req, res) => {
     return User.findAll({ raw: true })
       .then(users => res.render('admin/users', { users }))
   },
 
+  //尚未refactor
   toggleAdmin: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
