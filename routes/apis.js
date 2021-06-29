@@ -21,20 +21,20 @@ const authenticatedAdmin = (req, res, next) => {
   }
 }
 
-router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
+router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
+router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
 
-// router.get('/admin/restaurants', adminController.getRestaurants)
-router.get('/admin/restaurants/:id', adminController.getRestaurant)
-router.post('/admin/restaurants', upload.single('image'), adminController.postRestaurant)
-router.put('/admin/restaurants/:id', upload.single('image'), adminController.putRestaurant)
-router.delete('/admin/restaurants/:id', adminController.deleteRestaurant)
+router.get('/admin/restaurants/:id', authenticated, adminController.getRestaurant)
+router.post('/admin/restaurants', authenticated, upload.single('image'), adminController.postRestaurant)
+router.put('/admin/restaurants/:id', authenticated, upload.single('image'), adminController.putRestaurant)
+router.delete('/admin/restaurants/:id', authenticated, adminController.deleteRestaurant)
 
-router.get('/admin/categories', categoryController.getCategories)
-router.get('/admin/categories/:id', categoryController.getCategories)
-router.post('/admin/categories', categoryController.postCategories)
-router.put('/admin/categories/:id', categoryController.putCategories)
-router.delete('/admin/categories/:id', categoryController.deleteCategories)
+router.get('/admin/categories', authenticated, categoryController.getCategories)
+router.get('/admin/categories/:id', authenticated, categoryController.getCategories)
+router.post('/admin/categories', authenticated, categoryController.postCategories)
+router.put('/admin/categories/:id', authenticated, categoryController.putCategories)
+router.delete('/admin/categories/:id', authenticated, categoryController.deleteCategories)
 
 
 module.exports = router
