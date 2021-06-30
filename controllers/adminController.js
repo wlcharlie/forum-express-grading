@@ -13,13 +13,8 @@ const adminController = {
   },
 
   createRestaurant: (req, res) => {
-    Category.findAll({
-      raw: true,
-      nest: true
-    }).then(categories => {
-      return res.render('admin/create', {
-        categories: categories
-      })
+    adminService.createRestaurant(req, res, (data) => {
+      return res.render('admin/create', data)
     })
   },
 
@@ -41,16 +36,8 @@ const adminController = {
   },
 
   editRestaurant: (req, res) => {
-    Category.findAll({
-      raw: true,
-      nest: true
-    }).then(categories => {
-      return Restaurant.findByPk(req.params.id).then(restaurant => {
-        return res.render('admin/create', {
-          categories: categories,
-          restaurant: restaurant.toJSON()
-        })
-      })
+    adminService.editRestaurant(req, res, (data) => {
+      return res.render('admin/create', data)
     })
   },
 
@@ -74,19 +61,18 @@ const adminController = {
   },
 
   getUsers: (req, res) => {
-    return User.findAll({ raw: true })
-      .then(users => res.render('admin/users', { users }))
+    adminService.getUsers(req, res, (data) => {
+      res.render('admin/users', data)
+    })
   },
 
   toggleAdmin: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then(user => {
-        user.isAdmin = !user.isAdmin
-        user.save().then(() => {
-          req.flash('success_messages', `${user.name} was successfully to update`)
-          res.redirect('/admin/users')
-        })
-      })
+    adminService.toggleAdmin(req, res, (data) => {
+      if (data['status'] === 'success') {
+        req.flash('success_messages', data['message'])
+        return res.redirect('/admin/users')
+      }
+    })
   }
 }
 

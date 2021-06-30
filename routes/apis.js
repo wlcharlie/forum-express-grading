@@ -26,6 +26,9 @@ const authenticatedAdmin = (req, res, next) => {
 router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 
+router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
+router.put('/admin/users/:id/toggleAdmin', authenticated, authenticatedAdmin, adminController.toggleAdmin)
+
 router.get('/admin/restaurants', authenticated, authenticatedAdmin, adminController.getRestaurants)
 router.get('/admin/restaurants/:id', authenticated, authenticatedAdmin, adminController.getRestaurant)
 router.post('/admin/restaurants', authenticated, authenticatedAdmin, upload.single('image'), adminController.postRestaurant)
@@ -37,6 +40,8 @@ router.get('/admin/categories/:id', authenticated, authenticatedAdmin, categoryC
 router.post('/admin/categories', authenticated, authenticatedAdmin, categoryController.postCategories)
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategories)
 router.delete('/admin/categories/:id', authenticatedAdmin, authenticated, categoryController.deleteCategories)
+
+
 
 // restaurants
 router.get('/restaurants', authenticated, authenticatedAdmin, restController.getRestaurants)

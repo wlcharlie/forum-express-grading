@@ -19,16 +19,13 @@ const adminService = {
     })
   },
 
-  //尚未refactor
-  createRestaurant: (req, res) => {
+  createRestaurant: (req, res, cb) => {
     Category.findAll({
       raw: true,
       nest: true
-    }).then(categories => {
-      return res.render('admin/create', {
-        categories: categories
-      })
-    })
+    }).then(categories =>
+      cb({ categories })
+    )
   },
 
   postRestaurant: (req, res, cb) => {
@@ -79,13 +76,13 @@ const adminService = {
     })
   },
 
-  editRestaurant: (req, res) => {
+  editRestaurant: (req, res, cb) => {
     Category.findAll({
       raw: true,
       nest: true
     }).then(categories => {
       return Restaurant.findByPk(req.params.id).then(restaurant => {
-        return res.render('admin/create', {
+        return cb({
           categories: categories,
           restaurant: restaurant.toJSON()
         })
@@ -149,20 +146,19 @@ const adminService = {
       })
   },
 
-  //尚未refactor
-  getUsers: (req, res) => {
+
+  getUsers: (req, res, cb) => {
     return User.findAll({ raw: true })
-      .then(users => res.render('admin/users', { users }))
+      .then(users => cb({ users }))
   },
 
-  //尚未refactor
-  toggleAdmin: (req, res) => {
+
+  toggleAdmin: (req, res, cb) => {
     return User.findByPk(req.params.id)
       .then(user => {
         user.isAdmin = !user.isAdmin
         user.save().then(() => {
-          req.flash('success_messages', `${user.name} was successfully to update`)
-          res.redirect('/admin/users')
+          return cb({ status: 'success', message: 'the user\'s role has updated' })
         })
       })
   }
