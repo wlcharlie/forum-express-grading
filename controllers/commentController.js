@@ -1,13 +1,18 @@
 const db = require('../models')
 const Comment = db.Comment
 
+const commentService = require('../services/commentService')
+
 const commentController = {
   postComment: (req, res) => {
-    return Comment.create({
-      text: req.body.text,
-      RestaurantId: req.body.restaurantId,
-      UserId: req.user.id
-    }).then(comment => res.redirect(`/restaurants/${req.body.restaurantId}`))
+    commentService.postComment(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect(`/restaurants/${data.id}`)
+    })
   },
 
   deleteComment: (req, res) => {
