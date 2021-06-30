@@ -1,6 +1,3 @@
-const db = require('../models')
-const Comment = db.Comment
-
 const commentService = require('../services/commentService')
 
 const commentController = {
