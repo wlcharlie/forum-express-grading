@@ -26,6 +26,13 @@ const authenticatedAdmin = (req, res, next) => {
 router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 
+router.get('/users/top', authenticated, userController.getTopUser)
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
+
 router.get('/admin/users', authenticated, authenticatedAdmin, adminController.getUsers)
 router.put('/admin/users/:id/toggleAdmin', authenticated, authenticatedAdmin, adminController.toggleAdmin)
 
@@ -44,18 +51,18 @@ router.delete('/admin/categories/:id', authenticatedAdmin, authenticated, catego
 
 
 // restaurants
-router.get('/restaurants', authenticated, authenticatedAdmin, restController.getRestaurants)
-router.get('/restaurants/top', authenticated, authenticatedAdmin, restController.getTopRestaurants)
-router.get('/restaurants/:id/dashboard', authenticated, authenticatedAdmin, restController.getDashboard)
-router.get('/restaurants/feeds', authenticated, authenticatedAdmin, restController.getFeeds)
-router.get('/restaurants/:id', authenticated, authenticatedAdmin, restController.getRestaurant)
+router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
+router.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
+router.get('/restaurants/feeds', authenticated, restController.getFeeds)
+router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
-// router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
-// router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
-// router.post('/like/:restaurantId', authenticated, userController.addLike)
-// router.delete('/like/:restaurantId', authenticated, userController.removeLike)
+router.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+router.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+router.post('/like/:restaurantId', authenticated, userController.addLike)
+router.delete('/like/:restaurantId', authenticated, userController.removeLike)
 
-router.post('/comments', authenticated, authenticatedAdmin, commentController.postComment)
+router.post('/comments', authenticated, commentController.postComment)
 router.delete('/comments/:id', authenticated, authenticatedAdmin, commentController.deleteComment)
 
 //user profile
