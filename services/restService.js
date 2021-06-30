@@ -6,7 +6,7 @@ const User = db.User
 
 const pageLimit = 10
 
-const restController = {
+const restService = {
   getRestaurants: (req, res, cb) => {
     const offset = (req.query.page - 1) * pageLimit || 0
 
@@ -124,4 +124,4 @@ const restController = {
 
 }
 
-module.exports = restController
+module.exports = restService
